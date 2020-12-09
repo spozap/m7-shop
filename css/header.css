@@ -1,0 +1,22 @@
+ul li {
+    display: inline;
+}
+
+#header{
+    background-color: blue;    
+}
+
+.navbar-nav{
+    margin-left: auto;
+}
+
+  
+  .nav-link {
+    padding-right: .5rem !important;
+    padding-left: .5rem !important;
+  }
+  
+  .ml-auto .dropdown-menu {
+    left: auto !important;
+    right: 0px;
+  }
