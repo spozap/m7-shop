@@ -18,16 +18,20 @@
 
 <?php
 
+
     function isLogged(){
         return true;
     }
 
     function showNonLoggedItems(){
-        echo '<li class="nav-item"> NO LOGUEADO </li>';
+        echo '<li class="nav-item item"> Iniciar sesión </li>';
+        echo '<li class="nav-item item">No tienes cuenta? <a href="">Regístrate!</<></li>';
     }
 
     function showLoggedItems(){
-        echo '<li class="nav-item"> LOGUEADO </li>';
+        echo '<li class="nav-item item"> 
+            LOGUEADO
+        </li>';
     }
 
 ?>
