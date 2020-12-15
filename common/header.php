@@ -1,3 +1,12 @@
+<?php
+
+include_once("../db/dbConfig.php");
+include_once("../db/queries.php");
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +19,7 @@
         <div id="header">
             <nav class="navbar navbar-expand-sm bg-light">         
                 <ul class="navbar-nav"> 
-                    <?php isLogged() ? showLoggedItems() : showNonLoggedItems(); ?>
+                    <?php isLogged() ? showLoggedItems() : showNonLoggedItems() ?>
                 </ul> 
             </nav>           
         </div>       
@@ -19,11 +28,6 @@
 
 <?php
 
-    include_once("../db/dbConfig.php");
-        
-    function isLogged(){
-        return false;
-    }
 
     function showNonLoggedItems(){
         echo '<li class="nav-item item"> Iniciar sesión </li>';

@@ -12,7 +12,7 @@
 <body>
 
 <div class="jumbotron">
-    <h1 class="display-4 text-center">Bienvenido, usuario</h1> <!-- TODO: Recoger nombre de usuario -->
+    <h1 class="display-4 text-center">Bienvenido, usuario</h1>
     <p class="lead text-center">Esta es tu área de cliente , dónde podrás subir tus productos.</p>
     <hr class="my-4">
 </div>
