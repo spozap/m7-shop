@@ -1,3 +1,7 @@
+<?php
+    include_once("../db/dbConfig.php");
+    include_once("../db/queries.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +11,11 @@
     <title>Login</title>
 </head>
 <body>
-    <?php include_once("../common/header.php"); ?>
     <div class="align-items-center d-flex justify-content-center flex-column">
-        <form class="login">
+        <form class="login" method="POST" action="login.php">
         <div class="mb-3">
             <label for="exampleInputUsername" class="form-label">Usuario</label>
-            <input type="email" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp">
+            <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword" class="form-label">Contraseña</label>
@@ -24,3 +27,13 @@
 
 </body>
 </html>
+
+<?php
+
+    if(isset($_POST['username'],$_POST['password'])){
+        $username = $_POST['username'];
+        $passwd = $_POST['password'];
+
+    }
+
+?>

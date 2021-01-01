@@ -1,7 +1,7 @@
 <?php
 
 function getConnection(){
-    return new mysqli('localost','root','','m7-shop');
+    return new mysqli('localhost','root','','m7-shop');
 }
 
 function isLogged(){

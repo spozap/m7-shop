@@ -1,5 +1,7 @@
 <?php
     
+    include_once("dbConfig.php");
+
     function verifyUser($user,$password){
         $connection = getConnection();
 
@@ -7,15 +9,37 @@
             return false;
         }
 
-        $user = $connection->prepare("SELECT * FROM Customer WHERE username=? and password=?");
-        $user->bind_param("ss",$user,$password);
-        $user->execute();
+        $query = $connection->prepare("SELECT * FROM Customer WHERE username=? and password=?");
+        $query->bind_param("ss",$user,$password);
+        $query->execute();
         
-        if ($user->affected_rows === 0){
-            echo "No hay ningun usuario con ese usuario y contraseña.";
+        if ($query->affected_rows === 0){
+           return true;
+        } else {
+            return false;
         }
 
         $connection->close();
+    }
+
+    function registerUser($user,$password,$email){
+        $connection = getConnection();
+
+        if (!$connection){
+            return false;
+        }
+
+        $query = $connection->prepare("INSERT INTO `customer`(`username`,`password`,`email`) VALUES (?,?,?)");
+        $query -> bind_param("sss",$user,$password,$email);
+        $query -> execute();
+
+        if ($query->affected_rows === 0){
+            return false;
+        }
+
+        header(Location: 'main.php');
+        return true;
+
     }
 
 ?>
