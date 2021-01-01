@@ -2,9 +2,7 @@
 
 include_once("../db/dbConfig.php");
 include_once("../db/queries.php");
-
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +17,8 @@ session_start();
         <div id="header">
             <nav class="navbar navbar-expand-sm bg-light">         
                 <ul class="navbar-nav"> 
-                    <?php isLogged() ? showLoggedItems() : showNonLoggedItems() ?>
+                    <?php 
+                        isLogged() ? showLoggedItems() : showNonLoggedItems() ?>
                 </ul> 
             </nav>           
         </div>       
@@ -31,7 +30,7 @@ session_start();
 
     function showNonLoggedItems(){
         echo '<li class="nav-item item"> Iniciar sesión </li>';
-        echo '<li class="nav-item item">No tienes cuenta? <a href="register.php">Regístrate!</<></li>';
+        echo '<li class="nav-item item">No tienes cuenta? <a href="register.php">Regístrate!</a></li>';
     }
 
     function showLoggedItems(){

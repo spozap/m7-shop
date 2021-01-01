@@ -13,13 +13,13 @@
         $query->bind_param("ss",$user,$password);
         $query->execute();
         
+        $connection->close();
+
         if ($query->affected_rows === 0){
            return true;
         } else {
             return false;
         }
-
-        $connection->close();
     }
 
     function registerUser($user,$password,$email){
@@ -28,16 +28,29 @@
         if (!$connection){
             return false;
         }
-
         $query = $connection->prepare("INSERT INTO `customer`(`username`,`password`,`email`) VALUES (?,?,?)");
         $query -> bind_param("sss",$user,$password,$email);
+        $id = $connection -> insert_id;
         $query -> execute();
+        
+        $last_id = mysqli_insert_id($connection); // Getting ID from last Insert
 
         if ($query->affected_rows === 0){
+            $connection -> close();
             return false;
         }
 
-        header(Location: 'main.php');
+        session_start();
+
+        $_SESSION['id'] = $last_id;
+        $_SESSION['username'] = $user;
+        $_SESSION['password'] = $password;
+        $_SESSION['email'] = $email;
+
+
+        $connection->close();
+
+        header('Location:main.php');
         return true;
 
     }

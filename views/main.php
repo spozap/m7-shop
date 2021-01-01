@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="container">
+    </br>
     <form method="POST" action="main.php">
         <div class="input-container">
             <i class="fa fa-search icon" width="75px"></i> 
