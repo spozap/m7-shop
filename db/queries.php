@@ -4,22 +4,33 @@
 
     function verifyUser($user,$password){
         $connection = getConnection();
-
         if(!$connection){
             return false;
         }
 
-        $query = $connection->prepare("SELECT * FROM Customer WHERE username=? and password=?");
+        $query = $connection->prepare("SELECT `id`,`username`,`password` FROM customer WHERE `username`=? AND `password`=?");
         $query->bind_param("ss",$user,$password);
         $query->execute();
-        
-        $connection->close();
 
         if ($query->affected_rows === 0){
-           return true;
-        } else {
+            $connection->close();
+ 
             return false;
+         }
+
+        $query->bind_result($id,$username,$passwd);
+        while($query->fetch()){
+            session_start();
+            $_SESSION['id'] = $id;
+            $_SESSION['username'] = $username;
+            $_SESSION['password'] = $passwd;
+            break;
+
         }
+        $connection->close();
+
+        header('Location:main.php');
+        return true;
     }
 
     function registerUser($user,$password,$email){

@@ -29,7 +29,7 @@ session_start();
 
 
     function showNonLoggedItems(){
-        echo '<li class="nav-item item"> Iniciar sesión </li>';
+        echo '<li class="nav-item item"><a href="login.php">Iniciar sesión</a></li>';
         echo '<li class="nav-item item">No tienes cuenta? <a href="register.php">Regístrate!</a></li>';
     }
 
