@@ -1,9 +1,45 @@
 <?php
 
     include_once('../common/header.php');
-
+    
     if (!isLogged()){
         header('Location: main.php');
+    }
+    
+    if (isset($_FILES['images'],$_POST['name'],$_POST['description'],$_POST['category'])){
+
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $category = $_POST['category'];
+        
+        $path = "";
+
+        if (count($_FILES['images']['name']) > 3){
+            echo "No puedes subir mas de 3 imagenes!";
+        } else {
+            for($i=0;$i<count($_FILES['images']['name']);$i++){
+                
+                $file = $_FILES['images']['name'][$i];
+                $tmpName = $_FILES['images']['tmp_name'][$i];
+
+                if($i == count($_FILES['images']['name']) - 1){
+                    
+                    $path.= "../img/products/".$file;
+                    move_uploaded_file($tmpName,"../img/products/".$file);
+                    break; 
+
+                }
+
+                $path.= "../img/products/".$file."//##//"; // Some way to separate images
+                move_uploaded_file($tmpName,"../img/products/".$file);
+
+            }
+
+            $id = $_SESSION['id'];
+            echo $path;
+
+            insertProduct($id,$name,$description,$path,$category);
+        }
     }
 ?>
 <head>
@@ -20,30 +56,31 @@
     <div class="d-flex justify-content-center">
 
         <div>
-        <form method="POST" action="privateArea.php">
+        <form class="form-register" method="POST" action="privateArea.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="label-product">Nombre del producto</label>
-                <input type="product" class="form-control" id="inputEmail" placeholder="Enter email">
+                <input type="product" class="form-control" name="name" placeholder="Enter email">
             </div>
            
             <div class="form-group">
                 <label class="label-product">Descripción</label>
-                <textarea type="text" cols="40" rows="5" class="form-control" id="inputDescription" placeholder="Password"></textarea>
+                <textarea type="text" cols="40" rows="5" class="form-control" name="description" placeholder="Password"></textarea>
                 <label class="label-product">Imágenes:</label>
-                </br><input type="file" id="images" name="images" multiple></br>
+                </br><input type="file" id="images" name="images[]" multiple></br>
+                <!-- images[] means that will be an array of files uploaded-->
             </div>
 
             <div class="form-group">
                 <label class="label-product">Categoria: </label>
-                <input type="radio" class="radio" name="home" value="Muebles y hogar">
+                <input type="radio" class="radio" name="category" value="Muebles y hogar">
                 <label for="home">Muebles y hogar</label>
-                <input type="radio" class="radio" name="sport" value="Deporte">
+                <input type="radio" class="radio" name="category" value="Deporte">
                 <label for="home">Deporte</label>
-                <input type="radio" class="radio" name="other" value="Otros">
+                <input type="radio" class="radio" name="category" value="Otros">
                 <label for="other">Otros</label>
             </div>
 
-            <button type="submit " class="btn btn-primary submit-product">Subir producto</button>
+            <button type="submit" class="btn btn-primary submit-product">Subir producto</button>
             </form> 
     </div>
 

@@ -66,4 +66,25 @@
 
     }
 
+    function insertProduct($userId,$name,$description,$img,$category){
+        $connection = getConnection();
+        
+        if (!$connection){
+            return false;
+        }
+        $query = $connection->prepare("INSERT INTO `products`(`user_id`,`name`,
+        `description`,`images`,`categoria`) VALUES (?,?,?,?,?)");
+        $query -> bind_param("issss",$userId,$name,$description,$img,$category);
+        $query -> execute();
+        
+        if ($query->affected_rows === 0){
+            $connection->close();
+            return false;
+        }
+
+        echo "PRODUCTO INSERTADO OK";
+
+        return true;
+    }
+
 ?>
