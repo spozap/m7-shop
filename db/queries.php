@@ -8,8 +8,8 @@
             return false;
         }
 
-        $query = $connection->prepare("SELECT `id`,`username`,`password` FROM customer WHERE `username`=? AND `password`=?");
-        $query->bind_param("ss",$user,$password);
+        $query = $connection->prepare("SELECT `id`,`username`,`password` FROM customer WHERE `username`=?");
+        $query->bind_param("s",$user);
         $query->execute();
 
         if ($query->affected_rows === 0){
@@ -20,17 +20,25 @@
 
         $query->bind_result($id,$username,$passwd);
         while($query->fetch()){
-            session_start();
-            $_SESSION['id'] = $id;
-            $_SESSION['username'] = $username;
-            $_SESSION['password'] = $passwd;
-            break;
+
+            if (password_verify($password,$passwd)){
+                session_start();
+                $_SESSION['id'] = $id;
+                $_SESSION['username'] = $username;
+                $_SESSION['password'] = $passwd;
+                
+                $connection->close();
+
+                header('Location:main.php');
+
+                return true;
+            } else {
+                return false;
+            }
 
         }
-        $connection->close();
 
-        header('Location:main.php');
-        return true;
+        return false;
     }
 
     function registerUser($user,$password,$email){
@@ -39,8 +47,11 @@
         if (!$connection){
             return false;
         }
+
+        $pwd = password_hash($password,PASSWORD_DEFAULT);
+
         $query = $connection->prepare("INSERT INTO `customer`(`username`,`password`,`email`) VALUES (?,?,?)");
-        $query -> bind_param("sss",$user,$password,$email);
+        $query -> bind_param("sss",$user,$pwd,$email);
         $id = $connection -> insert_id;
         $query -> execute();
         
@@ -55,7 +66,7 @@
 
         $_SESSION['id'] = $last_id;
         $_SESSION['username'] = $user;
-        $_SESSION['password'] = $password;
+        $_SESSION['password'] = $pwd;
         $_SESSION['email'] = $email;
 
 
