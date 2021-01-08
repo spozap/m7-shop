@@ -16,5 +16,14 @@
             <input class="input-field" type="text" name="product" placeholder="Buscar productos...">
         </div>
     </form>
+    <div class="product-container">
+            <?php showProducts(); ?>
+        </div>
     </div>
 </body>
+
+<?php 
+
+    
+
+?>

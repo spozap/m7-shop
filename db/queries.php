@@ -8,11 +8,15 @@
             return false;
         }
 
-        $query = $connection->prepare("SELECT `id`,`username`,`password` FROM customer WHERE `username`=?");
+        $query = $connection->prepare("SELECT `id`,`username`,`password` FROM `customer` WHERE `username`=? LIMIT 1");
         $query->bind_param("s",$user);
         $query->execute();
 
-        if ($query->affected_rows === 0){
+        $query->store_result();
+
+
+        echo "ASDASDAS".$query->num_rows;
+        if ($query->num_rows === 0){
             $connection->close();
  
             return false;
@@ -96,6 +100,38 @@
         echo "PRODUCTO INSERTADO OK";
 
         return true;
+    }
+
+    function showProducts(){
+        $connection = getConnection();
+
+        if (!$connection){
+            return false;
+        }
+
+        $query = $connection->prepare("SELECT * from `products`");
+        $query -> execute();
+        $query -> store_result();
+
+        if ($query -> num_rows === 0){
+            return;
+        }
+
+        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+
+        while($query->fetch()){
+
+            echo $id;
+            echo $user_id;
+            echo $name;
+            echo $description;
+            echo $images;
+            echo $category;
+
+        } 
+        
+        $connection -> close();
+
     }
 
 ?>
