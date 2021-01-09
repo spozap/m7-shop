@@ -102,7 +102,7 @@
         return true;
     }
 
-    function showProducts(){
+    function selectProductsPaginator(){
         $connection = getConnection();
 
         if (!$connection){
@@ -116,21 +116,51 @@
         if ($query -> num_rows === 0){
             return;
         }
+        
+        $pages = ceil($query -> num_rows / 10);
+        echo "<ul class='pagination'>";
+        for($i = 1;$i<=$pages;$i++){
+            echo "<li class='page-item'><a class='page-link' href='main.php?id=$i'>$i</a></li>";
+        }
+        echo "</ul>";
+        
+        $connection -> close();
+
+    }
+
+    function showPaginatedProducts($id){
+        
+        $connection = getConnection();
+
+        if (!$connection){ return; }
+
+        $from = ($id - 1)* 10;
+
+        $query = $connection->prepare("SELECT * FROM `products` LIMIT ?,10");
+        $query-> bind_param("i",$from);
+        $query -> execute();
+
+        if ($query -> affected_rows === 0){
+            $connection->close();
+            return;
+        }
 
         $query->bind_result($id,$user_id,$name,$description,$images,$category);
 
         while($query->fetch()){
-
+            
+            echo "</br>";
             echo $id;
             echo $user_id;
             echo $name;
             echo $description;
             echo $images;
             echo $category;
-
+            echo "</br>";
         } 
-        
+
         $connection -> close();
+
 
     }
 

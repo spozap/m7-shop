@@ -17,13 +17,15 @@
         </div>
     </form>
     <div class="product-container">
-            <?php showProducts(); ?>
-        </div>
+            <?php 
+            selectProductsPaginator();
+
+            if(isset($_GET['id'])){
+                $actual = intval($_GET['id']);
+
+                showPaginatedProducts($actual);
+            }
+
+            ?>
     </div>
 </body>
-
-<?php 
-
-    
-
-?>
