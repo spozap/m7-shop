@@ -148,12 +148,14 @@
 
         while($query->fetch()){
             
-            echo "<div class='card' style='width: 18rem;'>".
-            "   <img class='card-img-top' src='...' alt='Card image cap'>".
-            "   <div class='card-body'>".
+            echo "<div class='card' style='width: 18rem;'>";
+            $image = explode("\n",$images);
+            for($i = 0;$i < count($image);$i++){
+                echo "   <img class='card-img-top' src='$image[$i]' alt='Card image cap'>";
+            }
+            echo "   <div class='card-body'>".
             "       <h5 class='card-title'>$name</h5>".
             "       <p class='card-text'></p>".
-            "       <a href='#' class='btn btn-primary'>+ Info </a>". 
             "     </div>";
 
         } 
@@ -182,7 +184,7 @@
         while($query->fetch()){
             
             echo "<div class='card product' style='width: 18rem;'>".
-            "       <img class='card-img-top' src='...' alt='Card image cap'>".
+            "       <img class='card-img-top' src='".explode("\n",$images)[0]."' alt='Card image cap'>".
             "       <div class='card-body'>".
             "        <h5 class='card-title'>$name</h5>".
             "         <p class='card-text'>$description</p>".
@@ -219,7 +221,11 @@
             echo "<h2> Subido por: ".getNameByUserId($user_id)."</h2>";
             echo "<p> Descripción </br> $description</p>";
             
-            echo "IMAGES ".$images;
+            $image = explode("\n",$images);
+
+            for($i = 0;$i < count($image);$i++){
+                echo "   <img class='card-img-top' src='$image[$i]' alt='Card image cap'>";
+            }
             echo "<p> Categoria: $category</p>CATEGORY";
 
         } 

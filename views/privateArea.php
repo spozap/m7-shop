@@ -30,7 +30,7 @@
 
                 }
 
-                $path.= "../img/products/".$file."//##//"; // Some way to separate images
+                $path.= "../img/products/".$file."\n"; // Some way to separate images
                 move_uploaded_file($tmpName,"../img/products/".$file);
 
             }
