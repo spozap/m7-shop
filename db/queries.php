@@ -128,6 +128,38 @@
 
     }
 
+    function showMyProducts(){
+
+        $connection = getConnection();
+
+        if (!$connection) { return; }
+        if (isset($_SESSION['id'])){ $id = $_SESSION['id'];}
+
+        $query = $connection ->prepare("SELECT * FROM `products` WHERE user_id=?");
+        $query -> bind_param("i",$id);
+        $query-> execute();
+
+        if ($query -> affected_rows === 0){
+            $connection->close();
+            return;
+        }
+
+        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+
+        while($query->fetch()){
+            
+            echo "</br>";
+            echo $id;
+            echo $user_id;
+            echo $name;
+            echo $description;
+            echo $images;
+            echo $category;
+            echo "</br>";
+        } 
+
+    }
+
     function showPaginatedProducts($id){
         
         $connection = getConnection();
