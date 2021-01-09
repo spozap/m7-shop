@@ -186,13 +186,67 @@
             "       <div class='card-body'>".
             "        <h5 class='card-title'>$name</h5>".
             "         <p class='card-text'>$description</p>".
-            "          <a href='#' class='btn btn-primary'>+ Info </a>". 
+            "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>". 
             "      </div></div>";
         } 
 
         $connection -> close();
 
+    }
 
+    function getProductinfo($id){
+
+        $connection = getConnection();
+
+        if(!$connection){
+            return false;
+        }
+
+        $query = $connection->prepare("SELECT * FROM `products` WHERE ID =?");
+        $query-> bind_param("i",$id);
+        $query -> execute();        
+
+        if ($query -> affected_rows === 0){
+            $connection->close();
+            return;
+        }
+
+        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+
+        while($query->fetch()){
+            
+            echo "<h1> Nombre del producto : $name </h1> ";
+            echo "<h2> Subido por: ".getNameByUserId($user_id)."</h2>";
+            echo "<p> Descripción </br> $description</p>";
+            
+            echo "IMAGES ".$images;
+            echo "<p> Categoria: $category</p>CATEGORY";
+
+        } 
+
+        $connection -> close();
+
+
+    }
+
+    function getNameByUserId($id){
+        $connection = getConnection();
+        if (!$connection){
+            return;
+        }
+        $query = $connection->prepare("SELECT `username` FROM `customer` WHERE ID=? LIMIT 1");
+        $query-> bind_param("i",$id);
+        $query -> execute();         
+
+        if ($query -> affected_rows === 0){
+            $connection->close();
+            return;
+        }
+        $query->bind_result($name);
+        while($query->fetch()){
+            $connection->close();
+            return $name;
+        } 
     }
 
 ?>
