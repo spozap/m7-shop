@@ -19,3 +19,13 @@
     padding:10px;
     text-align:center;
 }
+
+.product-container{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: ivory;
+}
+
+.product{
+    width: 50%;
+}

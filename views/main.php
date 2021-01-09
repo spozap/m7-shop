@@ -16,16 +16,23 @@
             <input class="input-field" type="text" name="product" placeholder="Buscar productos...">
         </div>
     </form>
-    <div class="product-container">
-            <?php 
-            selectProductsPaginator();
+        <?php 
+        echo "<div class='product-pagination'>";
 
+            selectProductsPaginator();
+        echo "</div>";
+        echo "<div class='product-container'>";
             if(isset($_GET['id'])){
                 $actual = intval($_GET['id']);
 
                 showPaginatedProducts($actual);
-            }
+            
+            } else {
 
-            ?>
+                showPaginatedProducts(1);
+            }
+        echo "</div>";
+               
+         ?>
     </div>
 </body>

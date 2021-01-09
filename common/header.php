@@ -35,6 +35,7 @@ session_start();
 
     function showLoggedItems(){
         echo '<li class="nav-item item">
+            <a href="main.php">PÁGINA PRINCIPAL</a>
             <a href="myProducts.php">MIS PRODUCTOS</a> 
             <a href="privateArea.php">ÁREA PRIVADA</a>
         </li>';

@@ -148,14 +148,14 @@
 
         while($query->fetch()){
             
-            echo "</br>";
-            echo $id;
-            echo $user_id;
-            echo $name;
-            echo $description;
-            echo $images;
-            echo $category;
-            echo "</br>";
+            echo "<div class='card' style='width: 18rem;'>".
+            "   <img class='card-img-top' src='...' alt='Card image cap'>".
+            "   <div class='card-body'>".
+            "       <h5 class='card-title'>$name</h5>".
+            "       <p class='card-text'></p>".
+            "       <a href='#' class='btn btn-primary'>+ Info </a>". 
+            "     </div>";
+
         } 
 
     }
@@ -181,14 +181,13 @@
 
         while($query->fetch()){
             
-            echo "</br>";
-            echo $id;
-            echo $user_id;
-            echo $name;
-            echo $description;
-            echo $images;
-            echo $category;
-            echo "</br>";
+            echo "<div class='card product' style='width: 18rem;'>".
+            "       <img class='card-img-top' src='...' alt='Card image cap'>".
+            "       <div class='card-body'>".
+            "        <h5 class='card-title'>$name</h5>".
+            "         <p class='card-text'>$description</p>".
+            "          <a href='#' class='btn btn-primary'>+ Info </a>". 
+            "      </div></div>";
         } 
 
         $connection -> close();
