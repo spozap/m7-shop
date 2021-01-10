@@ -43,7 +43,6 @@
     }
 ?>
 <head>
-    <link rel="stylesheet" href="../css/privateArea.css">
 </head>
 <body>
 
@@ -85,5 +84,6 @@
     </div>
 
     </div>
+    <link rel="stylesheet" href="../css/privateArea.css">
 
 </body>
