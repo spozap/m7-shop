@@ -246,7 +246,7 @@
         $validTypes = "";
 
         if (!empty($name)){
-            $select.= " name=? and";
+            $select.= " name LIKE CONCAT(?,'%') and";
             array_push($validArgs,$name);
         }
 
@@ -268,9 +268,9 @@
             } else if($order === 'preciodesc'){
                 $select.= " ORDER BY precio desc";
             } else if($order === 'fechaasc'){
-                $select.= " ORDER BY fecha asc";
+                $select.= " ORDER BY creado asc";
             } else if($order === 'fechadesc'){
-                $select.= " ORDER BY fecha desc";
+                $select.= " ORDER BY creado desc";
             }
 
         }
@@ -309,6 +309,8 @@
 
         $query = $connection->prepare($select);
         array_unshift($validArgs,$validTypes);
+
+        echo "CONSULTA: ".$select;
 
         // Calling to bind_param depending on different valid variables to query properly
         call_user_func_array(array($query,'bind_param'),refValues($validArgs));
