@@ -179,7 +179,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
 
         while($query->fetch()){
             
@@ -188,7 +188,9 @@
             "       <div class='card-body'>".
             "        <h5 class='card-title'>$name</h5>".
             "         <p class='card-text'>$description</p>".
-            "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>". 
+            "         <p class='card-text'>Precio: $price</p>".
+            "         <p class='card-text'>Publicado: $createdAt</p>".
+            "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>".  
             "      </div></div>";
         } 
 
@@ -213,7 +215,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
 
         while($query->fetch()){
             
@@ -227,7 +229,8 @@
                 echo "   <img class='card-img-top' src='$image[$i]' alt='Card image cap'>";
             }
             echo "<p> Categoria: $category</p>CATEGORY";
-
+            echo "<p class='card-text'>Precio: $price</p>";
+            echo "<p class='card-text'>Publicado: $createdAt</p>";
         } 
 
         $connection -> close();
@@ -243,17 +246,17 @@
         $validTypes = "";
 
         if (!empty($name)){
-            $select.= " name=?";
+            $select.= " name=? and";
             array_push($validArgs,$name);
         }
 
         if(!empty($category)){
-            $select.=" categoria=?";
+            $select.=" categoria=? and";
             array_push($validArgs,$category);
         }
 
-        if(!empty($priceFrom) && !empty($priceTo)){
-            $select.= " BETWEEN $priceFrom and $priceTo";
+        if(!empty($priceFrom) || !empty($priceTo)){
+            $select.= " precio BETWEEN ? and ? and";
             array_push($validArgs,$priceFrom);
             array_push($validArgs,$priceTo);
         }
@@ -269,8 +272,6 @@
             } else if($order === 'fechadesc'){
                 $select.= " ORDER BY fecha desc";
             }
-
-            array_push($validArgs,$order);
 
         }
 
@@ -291,11 +292,23 @@
             $validTypes.="s";
         }
 
+        // If there's and AND at the end , remove it
+        if (strcmp(substr($select,-3,strlen($select)),"and") == 0){
+            $select =  substr($select,0,strlen($select) - 3);
+        }
+
+        // In case there is WHERE followed to an Order , remove Where
+        if (strpos($select,'WHERE ORDER') !== false) {
+            $select = preg_replace("/WHERE ORDER/i","ORDER",$select);
+        }
+
+        // In case there is and followed to an Order , remove and
+        if (strpos($select,'and ORDER') !== false) {
+            $select = preg_replace("/and ORDER/i","ORDER",$select);
+        }
+
         $query = $connection->prepare($select);
         array_unshift($validArgs,$validTypes);
-
-        echo "CONSULTA ".$select;
-        echo "ARRAY ".print_r($validArgs);
 
         // Calling to bind_param depending on different valid variables to query properly
         call_user_func_array(array($query,'bind_param'),refValues($validArgs));
@@ -307,7 +320,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
 
         while($query->fetch()){
             
@@ -316,6 +329,8 @@
             "       <div class='card-body'>".
             "        <h5 class='card-title'>$name</h5>".
             "         <p class='card-text'>$description</p>".
+            "         <p class='card-text'>Precio: $price</p>".
+            "         <p class='card-text'>Publicado: $createdAt</p>".            
             "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>". 
             "      </div></div>";
 
