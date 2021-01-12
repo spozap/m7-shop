@@ -235,6 +235,107 @@
 
     }
 
+    function showProductsMatchingFilters($name,$category,$priceFrom,$priceTo,$order){
+
+        $select = "SELECT * FROM products WHERE";
+
+        $validArgs = array();
+        $validTypes = "";
+
+        if (!empty($name)){
+            $select.= " name=?";
+            array_push($validArgs,$name);
+        }
+
+        if(!empty($category)){
+            $select.=" categoria=?";
+            array_push($validArgs,$category);
+        }
+
+        if(!empty($priceFrom) && !empty($priceTo)){
+            $select.= " BETWEEN $priceFrom and $priceTo";
+            array_push($validArgs,$priceFrom);
+            array_push($validArgs,$priceTo);
+        }
+
+        if (!empty($order)){
+
+            if($order === 'precioasc'){
+                $select.= " ORDER BY precio asc";
+            } else if($order === 'preciodesc'){
+                $select.= " ORDER BY precio desc";
+            } else if($order === 'fechaasc'){
+                $select.= " ORDER BY fecha asc";
+            } else if($order === 'fechadesc'){
+                $select.= " ORDER BY fecha desc";
+            }
+
+            array_push($validArgs,$order);
+
+        }
+
+        $connection = getConnection();
+
+        if(!$connection){
+            return false;
+        }
+
+        $types = "";
+
+        for($i=0;$i<count($validArgs);$i++){
+            if (is_numeric($validArgs[$i])){
+                $validTypes.="i";
+                continue;
+            }
+
+            $validTypes.="s";
+        }
+
+        $query = $connection->prepare($select);
+        array_unshift($validArgs,$validTypes);
+
+        echo "CONSULTA ".$select;
+        echo "ARRAY ".print_r($validArgs);
+
+        // Calling to bind_param depending on different valid variables to query properly
+        call_user_func_array(array($query,'bind_param'),refValues($validArgs));
+
+        $query -> execute();
+
+        if ($query -> affected_rows === 0){
+            $connection -> close();
+            return;
+        }
+
+        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+
+        while($query->fetch()){
+            
+            echo "<div class='card product' style='width: 18rem;'>".
+            "       <img class='card-img-top' src='".explode("\n",$images)[0]."' alt='Card image cap'>".
+            "       <div class='card-body'>".
+            "        <h5 class='card-title'>$name</h5>".
+            "         <p class='card-text'>$description</p>".
+            "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>". 
+            "      </div></div>";
+
+        }
+
+        $connection->close();
+
+    }
+
+    // Method made to get reference of each value on parameters given to bind_param , if not 
+    // call_user_func_array does not accept it.
+    
+    function refValues($arr){
+        $refs = array();
+        foreach($arr as $key => $value){
+            $refs[$key] = &$arr[$key];
+        }
+        return $refs;
+    }
+
     function getNameByUserId($id){
         $connection = getConnection();
         if (!$connection){
