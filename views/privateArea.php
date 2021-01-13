@@ -6,12 +6,14 @@
         header('Location: main.php');
     }
     
-    if (isset($_FILES['images'],$_POST['name'],$_POST['description'],$_POST['category'])){
+    if (isset($_FILES['images'],$_POST['name'],$_POST['description'],$_POST['category'],$_POST
+    ['price'])){
 
         $name = $_POST['name'];
         $description = $_POST['description'];
-        $category = $_POST['category'];
-        
+        $category =  $_POST['category'];
+        $price = $_POST['price'];
+
         $path = "";
 
         if (count($_FILES['images']['name']) > 3){
@@ -38,7 +40,7 @@
             $id = $_SESSION['id'];
             echo $path;
 
-            insertProduct($id,$name,$description,$path,$category);
+            insertProduct($id,$name,$description,$path,$category,$price);
         }
     }
 ?>
@@ -47,7 +49,7 @@
 <body>
 
 <div class="jumbotron">
-    <h1 class="display-4 text-center">Bienvenido, <?php echo $_SESSION['username'].' '.$_SESSION['id'] ; ?></h1>
+    <h1 class="display-4 text-center">Bienvenido, <?php echo $_SESSION['username']; ?></h1>
     <p class="lead text-center">Esta es tu área de cliente , dónde podrás subir tus productos.</p>
     <hr class="my-4">
 </div>
@@ -58,7 +60,10 @@
         <form class="form-register" method="POST" action="privateArea.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="label-product">Nombre del producto</label>
-                <input type="product" class="form-control" name="name" placeholder="Enter email">
+                <input type="product" class="form-control" name="name" placeholder="Nombre..">
+
+                <label class="label-product">Precio del producto</label>
+                <input type="number" class="form-control" name="price" placeholder="Precio..">
             </div>
            
             <div class="form-group">

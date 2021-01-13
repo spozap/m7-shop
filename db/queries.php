@@ -81,15 +81,15 @@
 
     }
 
-    function insertProduct($userId,$name,$description,$img,$category){
+    function insertProduct($userId,$name,$description,$img,$category,$price){
         $connection = getConnection();
         
         if (!$connection){
             return false;
         }
         $query = $connection->prepare("INSERT INTO `products`(`user_id`,`name`,
-        `description`,`images`,`categoria`) VALUES (?,?,?,?,?)");
-        $query -> bind_param("issss",$userId,$name,$description,$img,$category);
+        `description`,`images`,`categoria`,`precio`) VALUES (?,?,?,?,?,?)");
+        $query -> bind_param("issssi",$userId,$name,$description,$img,$category,$price);
         $query -> execute();
         
         if ($query->affected_rows === 0){
@@ -144,19 +144,22 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
 
         while($query->fetch()){
             
-            echo "<div class='card' style='width: 18rem;'>";
+            echo "<div class='card product' style='width: 18rem;'>";
             $image = explode("\n",$images);
             for($i = 0;$i < count($image);$i++){
                 echo "   <img class='card-img-top' src='$image[$i]' alt='Card image cap'>";
             }
             echo "   <div class='card-body'>".
             "       <h5 class='card-title'>$name</h5>".
+            "         <p class='card-text'>$description</p>".
+            "         <p class='card-text'>Precio: $price</p>".
+            "         <p class='card-text'>Publicado: $createdAt</p>".
             "       <p class='card-text'></p>".
-            "     </div>";
+            "</div></div>";
 
         } 
 
@@ -222,15 +225,16 @@
             echo "<h1> Nombre del producto : $name </h1> ";
             echo "<h2> Subido por: ".getNameByUserId($user_id)."</h2>";
             echo "<p> Descripción </br> $description</p>";
-            
+            echo "<p> Categoria: $category</p>CATEGORY";
+            echo "<p class='card-text'>Precio: $price</p>";
+            echo "<p class='card-text'>Publicado: $createdAt</p>";
+
             $image = explode("\n",$images);
 
             for($i = 0;$i < count($image);$i++){
                 echo "   <img class='card-img-top' src='$image[$i]' alt='Card image cap'>";
             }
-            echo "<p> Categoria: $category</p>CATEGORY";
-            echo "<p class='card-text'>Precio: $price</p>";
-            echo "<p class='card-text'>Publicado: $createdAt</p>";
+
         } 
 
         $connection -> close();
@@ -309,8 +313,6 @@
 
         $query = $connection->prepare($select);
         array_unshift($validArgs,$validTypes);
-
-        echo "CONSULTA: ".$select;
 
         // Calling to bind_param depending on different valid variables to query properly
         call_user_func_array(array($query,'bind_param'),refValues($validArgs));
