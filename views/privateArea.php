@@ -19,6 +19,9 @@
         if (count($_FILES['images']['name']) > 3){
             echo "No puedes subir mas de 3 imagenes!";
         } else {
+
+            $id = $_SESSION['id'];
+
             for($i=0;$i<count($_FILES['images']['name']);$i++){
                 
                 $file = $_FILES['images']['name'][$i];
@@ -26,18 +29,18 @@
 
                 if($i == count($_FILES['images']['name']) - 1){
                     
-                    $path.= "../img/products/".$file;
-                    move_uploaded_file($tmpName,"../img/products/".$file);
+                    $path.= "../img/products/$id"."00".($i+1).".png";
+                    move_uploaded_file($tmpName,"../img/products/$id"."00".($i+1).".png");
                     break; 
 
                 }
 
-                $path.= "../img/products/".$file."\n"; // Some way to separate images
-                move_uploaded_file($tmpName,"../img/products/".$file);
+                $path.= "../img/products/$id"."00".($i+1).".png\n"; // Some way to separate images
+                move_uploaded_file($tmpName,"../img/products/$id"."00".($i+1).".png");
 
             }
 
-            $id = $_SESSION['id'];
+
             echo $path;
 
             insertProduct($id,$name,$description,$path,$category,$price);
