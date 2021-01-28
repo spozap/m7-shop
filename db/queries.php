@@ -144,7 +144,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt,$visitas);
 
         while($query->fetch()){
             
@@ -182,7 +182,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt,$visitas);
 
         while($query->fetch()){
             
@@ -199,6 +199,26 @@
 
         $connection -> close();
 
+    }
+
+    function verifyProductId($id){
+        $connection = getConnection();
+        if(!$connection){
+            return false;
+        }
+
+        $query = $connection->prepare("SELECT `id` FROM `products` WHERE id=?");
+        $query -> bind_param("i",$id);
+        $query -> execute();  
+        $query -> store_result();
+        
+        if ($query -> num_rows === 0){
+            $connection->close();
+            return false;
+        }
+        echo "AAAAA";
+        $connection->close();
+        return true;
     }
 
     function getProductinfo($id){
@@ -218,7 +238,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt,$visits);
 
         while($query->fetch()){
             

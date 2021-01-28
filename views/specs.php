@@ -2,19 +2,35 @@
 
     include_once('../common/header.php');
 
-
-    if(isset($_GET['product_id'])){
-        $id = $_GET['product_id'];
-    }
-
 ?>
 
 <div class="product-container">
 
     <?php
+        if (isset($_GET['product_id'])){
 
-        getProductinfo($id);
+            $id = $_GET['product_id'];
 
+            echo verifyProductId($id);
+            if (!verifyProductId($id)){
+                echo "EL PRODUCTO ESPECIFICADO NO EXISTE";
+            } else {
+                $conn = getConnection();
+                if (!$conn){
+                    return;
+                }
+
+                $query = $conn->prepare("UPDATE `products` SET `visitas` = (SELECT sum(`visitas` + 1) WHERE id= ?) WHERE id=?");
+                $query -> bind_param("ii",$id,$id);
+                $query -> execute();
+
+                if ($query -> affected_rows === 0){
+                    $conn -> close();
+                }
+                //update products set visitas = (SELECT sum(visitas + 1) where id='5') where id='5'
+                getProductinfo($id);
+            }
+        }
     ?>
 
 </div>
