@@ -29,14 +29,14 @@
 
                 if($i == count($_FILES['images']['name']) - 1){
                     
-                    $path.= "../img/products/$id"."00".($i+1).".png";
+                    $path.= "../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png";
                     move_uploaded_file($tmpName,"../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png");
                     break; 
 
                 }
 
-                $path.= "../img/products/$id".date("Y_m_d_h_i_sa").".png\n"; // Some way to separate images
-                move_uploaded_file($tmpName,"../img/products/$id"."00".($i+1).".png");
+                $path.= "../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png\n"; // Some way to separate images
+                move_uploaded_file($tmpName,"../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png");
 
             }
 

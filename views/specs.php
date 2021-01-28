@@ -20,7 +20,7 @@
                     return;
                 }
 
-                $query = $conn->prepare("UPDATE `products` SET `visitas` = (SELECT sum(`visitas` + 1) WHERE id= ?) WHERE id=?");
+                $query = $conn->prepare("UPDATE `products` SET `visitas` = (SELECT sum(`visitas` + 1) from products WHERE id= ?) WHERE id=?");
                 $query -> bind_param("ii",$id,$id);
                 $query -> execute();
 
