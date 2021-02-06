@@ -14,8 +14,6 @@
 
         $query->store_result();
 
-
-        echo "ASDASDAS".$query->num_rows;
         if ($query->num_rows === 0){
             $connection->close();
  
@@ -158,6 +156,7 @@
             "         <p class='card-text'>$description</p>".
             "         <p class='card-text'>Precio: $price</p>".
             "         <p class='card-text'>Publicado: $createdAt</p>".
+            "         <a href='myProducts.php?remove_product=$id' class='btn btn-primary'>Eliminar producto </a>".
             "       <p class='card-text'></p>".
             "</div></div>";
 
