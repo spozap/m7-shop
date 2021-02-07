@@ -8,14 +8,23 @@
         if (isset($_GET['id'])){
 
             $productId = $_GET['id'];
-
+            $sessionUserId = $_SESSION['id'];
             try {
                 $connection = getPDOConnection();
-                $productSelect = "SELECT name,description,categoria,precio from products WHERE id = ?";
+                $productSelect = "SELECT user_id,name,description,categoria,precio from products WHERE id = ?";
                 $statement = $connection -> prepare($productSelect);
                 $statement -> execute(array($productId));
 
+                if ($statement -> rowCount() === 0){
+                    echo "PRODUCTO NO EXISTE";
+                }
+
                 while($fila = $statement -> fetch(PDO::FETCH_ASSOC)){
+
+                    if ($sessionUserId != $fila['user_id']){
+                        header("Location: main.php");
+                    }
+
                     echo "<form class='form-register' method='GET' action='editMyProduct.php'>".
                         "<div class='mb-3'>".
                         "<label for='usernameInput' class='form-label'>Nombre del producto</label>".
@@ -41,6 +50,10 @@
 
                 $statement -> closeCursor();
 
+                if (isset($_GET['edited'])){
+                    echo "PRODUCTO MODIFICADO";
+                }
+
             } catch(PDOException $e){
                 die($e->getMessage());
             }
@@ -65,7 +78,7 @@
 
             $statement -> closeCursor();
             
-            header("Location: editMyProduct.php?id=$productId");
+            header("Location: editMyProduct.php?id=$productId&edited=true");
         } catch(PDOException $e){
             die($e->getMessage());
         }
