@@ -157,6 +157,7 @@
             "         <p class='card-text'>Precio: $price</p>".
             "         <p class='card-text'>Publicado: $createdAt</p>".
             "         <a href='myProducts.php?remove_product=$id' class='btn btn-primary'>Eliminar producto </a>".
+            "         <a href='editMyProduct.php?id=$id' class='btn btn-primary'>Editar Producto </a>".
             "       <p class='card-text'></p>".
             "</div></div>";
 
