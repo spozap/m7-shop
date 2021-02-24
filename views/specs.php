@@ -2,6 +2,9 @@
 
     include_once('../common/header.php');
 
+    if (!isLogged()){
+        header('Location: main.php');
+    }
 ?>
 
 <div class="product-container">

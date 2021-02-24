@@ -333,9 +333,10 @@
 
         $query = $connection->prepare($select);
         array_unshift($validArgs,$validTypes);
-
         // Calling to bind_param depending on different valid variables to query properly
-        call_user_func_array(array($query,'bind_param'),refValues($validArgs));
+        if (strpos($select,'?') != false){
+            call_user_func_array(array($query,'bind_param'),refValues($validArgs));
+        }
 
         $query -> execute();
 
@@ -344,7 +345,7 @@
             return;
         }
 
-        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt);
+        $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt,$visits);
 
         while($query->fetch()){
             
