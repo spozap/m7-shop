@@ -26,7 +26,7 @@
 
 <?php
 
-    include_once("../db/queries.php");
+    include_once("../db/registerUser.php");
 
     if(isset($_POST['username'],$_POST['password'],$_POST['email'])){
         

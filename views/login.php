@@ -27,8 +27,7 @@
 
 <?php
 
-    include_once("../db/dbConfig.php");
-    include_once("../db/queries.php");
+    include_once("../db/verifyUser.php");
 
     if(isset($_POST['username'],$_POST['password'])){
         $username = $_POST['username'];
