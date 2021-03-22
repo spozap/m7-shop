@@ -9,19 +9,26 @@
         <form class="form-register" method="POST" action="register.php">
             <div class="mb-3">
                 <label for="usernameInput" class="form-label">Usuario</label>
-                <input class="form-control" name="username">
+                <input class="form-control" name="username" id="username">
+                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
                 <label for="emailInput" class="form-label">Correo electrónico</label>
-                <input class="form-control" name="email">
+                <input class="form-control" name="email" id="email">
+                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
                 <label for="passwdInput" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="password">
+                <input type="password" class="form-control" name="password" id="password">
+                <div class="invalid-feedback"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="registerBtn">Submit</button>
             </form>
     </div>
+
+    <script src="../js/register.js"></script>
+
+
 </body>
 
 <?php
