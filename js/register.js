@@ -18,7 +18,7 @@ const validateEmail = () => {
     let email = document.getElementById('email');
     
     if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){ // asdas@asda.com OK
-        setIsValid(email , invalidFeedbacks[1])
+        setIsValid(email)
         return true
     }
     
@@ -35,7 +35,7 @@ const validateUsername = () => {
     let username = document.getElementById('username');
     
     if (username.value.match(/^\w{3,20}$/)){ // Username with between 3 and 20 chars
-        setIsValid(username , invalidFeedbacks[0])
+        setIsValid(username)
         return true
     }
 
@@ -60,7 +60,7 @@ const validatePassword = () => {
      */
 
     if (password.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)){
-        setIsValid(password , invalidFeedbacks[2])
+        setIsValid(password)
         return true
     }
 
@@ -72,7 +72,7 @@ const validatePassword = () => {
 document.getElementById("password").addEventListener("blur" , validatePassword)
 
 
-const setIsValid = (element , feedback ) => {
+const setIsValid = (element ) => {
 
     if (element.classList.contains('is-invalid')){
         element.classList.replace('is-invalid' , 'is-valid')
