@@ -36,12 +36,13 @@
         echo "<div class='product-pagination'>";
 
             selectProductsPaginator();
+
         echo "</div>";
-        echo "<div class='product-container'>";
+        echo "<div id='product-container' class='product-container'>";
             if(isset($_GET['id'])){ // If there is no filters , show corresponding 10 entries of products
                 $actual = intval($_GET['id']);
 
-                showPaginatedProducts($actual);
+                //showPaginatedProducts($actual);
             
             } else if (!(empty($_GET['category'])) || (!empty($_GET['order'])) || (!empty($_GET['from']))
             || (!empty($_GET['to'])) || (!empty($_GET['product']))){ // Query products matching filters
@@ -62,7 +63,7 @@
 
             } else { // If there is no filters and no Id is specified , show 10 first products
 
-                showPaginatedProducts(1);
+                //showPaginatedProducts(1);
             }
         echo "</div>";
                
@@ -98,4 +99,7 @@
             margin-left: 10px;
         }
     </style>
+
+    <script src="../js/showProducts.js"></script>
+
 </body>
