@@ -1,7 +1,6 @@
 <?php
 
 include_once("dbConfig.php");
-include_once("getNameByUserId.php");
 
 $id = $_GET['product_id'];
 

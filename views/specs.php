@@ -30,8 +30,7 @@
                 if ($query -> affected_rows === 0){
                     $conn -> close();
                 }
-                //update products set visitas = (SELECT sum(visitas + 1) where id='5') where id='5'
-                //getProductinfo($id);
+
             }
         }
     ?>
