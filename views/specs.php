@@ -31,9 +31,11 @@
                     $conn -> close();
                 }
                 //update products set visitas = (SELECT sum(visitas + 1) where id='5') where id='5'
-                getProductinfo($id);
+                //getProductinfo($id);
             }
         }
     ?>
 
 </div>
+
+<script src="../js/productDetail.js"></script>

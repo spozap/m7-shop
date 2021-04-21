@@ -1,9 +1,9 @@
-fetch('../db/showPaginatedProducts.php' , {
-}).then(response => response.json())
+fetch('../db/showPaginatedProducts.php').then(response => response.json())
 .then(data => {
 
     let container = document.getElementById('product-container')
-    console.log(container)
+    
+
     data.forEach(product => {
 
         let card = document.createElement('div')
@@ -26,9 +26,16 @@ fetch('../db/showPaginatedProducts.php' , {
         let published = document.createElement('p')
         published.innerHTML = product.creado
 
+        let moreInfo = document.createElement('a')
+        moreInfo.href = 'specs.php?product_id=' + product.id;
+        moreInfo.innerHTML = "+ Info"
+        moreInfo.classList.add("btn" , "btn-primary")
+        
+
         cardBody.appendChild(title)
         cardBody.appendChild(price)
         cardBody.appendChild(published)
+        cardBody.appendChild(moreInfo)
 
         card.appendChild(cardBody)
 

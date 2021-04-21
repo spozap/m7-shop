@@ -63,17 +63,23 @@
         <form class="form-register" method="POST" action="privateArea.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="label-product">Nombre del producto</label>
-                <input type="product" class="form-control" name="name" placeholder="Nombre..">
+                <input type="product" class="form-control" name="name" id="product-name" placeholder="Nombre..">
+                <div class="invalid-feedback"></div>
 
                 <label class="label-product">Precio del producto</label>
-                <input type="number" class="form-control" name="price" placeholder="Precio..">
+                <input type="number" class="form-control" name="price" id="product-price" placeholder="Precio..">
+                <div class="invalid-feedback"></div>
             </div>
            
             <div class="form-group">
                 <label class="label-product">Descripción</label>
-                <textarea type="text" cols="40" rows="5" class="form-control" name="description" placeholder="Password"></textarea>
+                <textarea type="text" cols="40" rows="5" class="form-control"
+                id="product-description" name="description" placeholder="Password"></textarea>
+                <div class="invalid-feedback"></div>
+
                 <label class="label-product">Imágenes:</label>
-                </br><input type="file" id="images" name="images[]" multiple></br>
+                </br><input type="file" id="product-images" name="images[]" multiple></br>
+                <div class="invalid-feedback"></div>
                 <!-- images[] means that will be an array of files uploaded-->
             </div>
 
@@ -87,11 +93,12 @@
                 <label for="other">Otros</label>
             </div>
 
-            <button type="submit" class="btn btn-primary submit-product">Subir producto</button>
+            <button id="product-submit" class="btn btn-primary submit-product">Subir producto</button>
             </form> 
     </div>
 
     </div>
     <link rel="stylesheet" href="../css/privateArea.css">
+    <script src="../js/productForm.js"></script>
 
 </body>

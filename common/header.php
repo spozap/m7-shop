@@ -5,7 +5,6 @@ include_once("../db/selectProductsPaginator.php");
 include_once("../db/showProductsMatchingFilters.php");
 include_once("../db/showMyProducts.php");
 include_once("../db/verifyProductId.php");
-include_once("../db/getProductInfo.php");
 include_once("../db/getNameByUserId.php");
 include_once("../db/insertProduct.php");
 
