@@ -5,47 +5,7 @@
     if (!isLogged()){
         header('Location: main.php');
     }
-    
-    if (isset($_FILES['images'],$_POST['name'],$_POST['description'],$_POST['category'],$_POST
-    ['price'])){
 
-        $name = $_POST['name'];
-        $description = $_POST['description'];
-        $category =  $_POST['category'];
-        $price = $_POST['price'];
-
-        $path = "";
-
-        if (count($_FILES['images']['name']) > 3){
-            echo "No puedes subir mas de 3 imagenes!";
-        } else {
-
-            $id = $_SESSION['id'];
-
-            for($i=0;$i<count($_FILES['images']['name']);$i++){
-                
-                $file = $_FILES['images']['name'][$i];
-                $tmpName = $_FILES['images']['tmp_name'][$i];
-
-                if($i == count($_FILES['images']['name']) - 1){
-                    
-                    $path.= "../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png";
-                    move_uploaded_file($tmpName,"../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png");
-                    break; 
-
-                }
-
-                $path.= "../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png\n"; // Some way to separate images
-                move_uploaded_file($tmpName,"../img/products/$id".date("Y_m_d_h_i_sa").($i+1).".png");
-
-            }
-
-
-            echo $path;
-
-            insertProduct($id,$name,$description,$path,$category,$price);
-        }
-    }
 ?>
 <head>
 </head>
@@ -60,7 +20,7 @@
     <div class="d-flex justify-content-center">
 
         <div>
-        <form class="form-register" method="POST" action="privateArea.php" enctype="multipart/form-data">
+        <form class="form-register" method="POST">
             <div class="form-group">
                 <label class="label-product">Nombre del producto</label>
                 <input type="product" class="form-control" name="name" id="product-name" placeholder="Nombre..">
@@ -85,7 +45,7 @@
 
             <div class="form-group">
                 <label class="label-product">Categoria: </label>
-                <input type="radio" class="radio" name="category" value="Muebles y hogar">
+                <input type="radio" class="radio" name="category" value="Muebles y hogar" checked>
                 <label for="home">Muebles y hogar</label>
                 <input type="radio" class="radio" name="category" value="Deporte">
                 <label for="home">Deporte</label>
@@ -94,7 +54,7 @@
             </div>
 
             <button id="product-submit" class="btn btn-primary submit-product">Subir producto</button>
-            </form> 
+        </form> 
     </div>
 
     </div>
