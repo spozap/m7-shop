@@ -49,7 +49,6 @@ submit.addEventListener('click' ,function(e) {
     .then(data => {
 
         console.log(data)
-
     })
 
     e.preventDefault();

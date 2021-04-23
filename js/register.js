@@ -1,15 +1,35 @@
-console.log("CACA DE VACA")
-
 let register = document.getElementById("registerBtn")
 let invalidFeedbacks = document.querySelectorAll('.invalid-feedback')
 
-
+console.log("AAAAA")
 register.addEventListener('click' , (e) => {
-    
+    console.log("HAS HECHO CLICKKKK")
     if (!validateUsername() || !validatePassword()
         || !validateEmail()){
         e.preventDefault();
+        console.log("AAAAAEEEEE")
+        return;
     }
+
+    let body = new FormData;
+    body.append("username" , document.getElementById('username').value)
+    body.append("password", document.getElementById('password').value)
+    body.append("email", document.getElementById('email').value)
+
+    console.log(document.getElementById('username').value)
+    console.log(document.getElementById('password').value)
+    console.log(document.getElementById('email').value)
+
+    fetch("../db/registerUser.php" , { method: 'POST' , body: body })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data)
+        location.replace("http://localhost/m7-shop/views/main.php")
+
+    });
+
+    e.preventDefault();
 
 })
 
