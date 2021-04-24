@@ -2,27 +2,31 @@
 
 include_once("dbConfig.php");
 
-function verifyUser($user,$password){
-    $connection = getConnection();
-    if(!$connection){
-        return false;
-    }
+$connection = getConnection();
+if(!$connection){
+    echo json_encode(["validated" => false]);
+    return;
+}
+
+if (isset($_POST['username'],$_POST['password'])){
+
+    $user = $_POST['username'];
+    $password = $_POST['password'];
 
     $query = $connection->prepare("SELECT `id`,`username`,`password` FROM `customer` WHERE `username`=? LIMIT 1");
     $query->bind_param("s",$user);
     $query->execute();
-
+    
     $query->store_result();
-
+    
     if ($query->num_rows === 0){
         $connection->close();
-
-        return false;
-     }
-
+        return;
+    }
+    
     $query->bind_result($id,$username,$passwd);
     while($query->fetch()){
-
+    
         if (password_verify($password,$passwd)){
             session_start();
             $_SESSION['id'] = $id;
@@ -30,17 +34,16 @@ function verifyUser($user,$password){
             $_SESSION['password'] = $passwd;
             
             $connection->close();
-
-            header('Location:main.php');
-
-            return true;
-        } else {
-            return false;
+     
+            echo json_encode(["validated" => true]);
+            return;
         }
-
+    
     }
-
-    return false;
+    
+    echo json_encode(["validated" => false]);
 }
+
+echo json_encode(["validated" => false]);
 
 ?>

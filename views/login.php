@@ -10,29 +10,23 @@
 </head>
 <body>
     <div id="container">
-        <form class="form-register" method="POST" action="login.php">
+        <form class="form-register" method="POST">
             <div class="mb-3">
                 <label for="usernameInput" class="form-label">Usuario</label>
-                <input class="form-control" name="username">
+                <input class="form-control" id="username" name="username">
+                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
                 <label for="passwdInput" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="password">
+                <input type="password" id="password" class="form-control" name="password">
+                <div class="invalid-feedback"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button id="login" class="btn btn-primary">Submit</button>
             </form>
     </div>
+
+    <script src="../js/login.js"></script>
+
+
 </body>
 </html>
-
-<?php
-
-    include_once("../db/verifyUser.php");
-
-    if(isset($_POST['username'],$_POST['password'])){
-        $username = $_POST['username'];
-        $passwd = $_POST['password'];
-        verifyUser($username,$passwd);
-    }
-
-?>

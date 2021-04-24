@@ -16,12 +16,11 @@ fetch('../db/showMap.php')
 
             let marker = L.marker([lat,lng]).addTo(map)
 
-            
+
 
             marker.bindPopup(`<div>
                                 <h5> Nombre del usuario: ${user.username} </h5><br/>
                                 <h5>Contacto email: ${user.email} </h5><br/>
-                                <p>Productos subidos</p>
                             </div>`)
 
         }
