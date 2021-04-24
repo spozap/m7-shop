@@ -67,26 +67,26 @@
 						</div>
 
 						<div class="col-7">
-							<label for="">Nom</label>
-							<input type="text" class="form-control" id="nomCarrer" name="nomCarrer">
+							<label for="">Nombre de la vía</label>
+							<input type="text" class="form-control" id="addrName" name="nomCarrer">
 						</div>
 
 						<div class="col-2">
-							<label for="">Número</label>
-							<input type="text" class="form-control" id="numCarrer" name="numCarrer">
+							<label for="">Num</label>
+							<input type="text" class="form-control" id="street" name="numCarrer">
 						</div>
 					</div>
 
 					<div class="form-row mb-4">
 						<div class="col-6">
-							<label for="">Poblacio</label>
-							<input type="text" class="form-control" id="poblacio" name="poblacio">
+							<label for="">Poblation</label>
+							<input type="text" class="form-control" id="pobl" name="poblacio">
 						</div>
 					</div>
 					<input type="hidden" name="lat" value="" id="latitude" name="latitude"/>  
 					<input type="hidden" name="lng" value="" id="longitude" name="longitude"/>  		
 	
-					<button class="btn btn-primary" id="registerBtn">Registrar</button>
+					<button class="btn btn-primary" disabled id="registerBtn">Registrar</button>
 				</form>
 			</div>
 

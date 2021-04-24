@@ -1,6 +1,42 @@
 let register = document.getElementById("registerBtn")
 let invalidFeedbacks = document.querySelectorAll('.invalid-feedback')
 
+let latitude = document.getElementById('latitude')
+let longitude = document.getElementById('longitude')
+
+// BUTTON TO SHOW USER ADDRESS
+
+var map = L.map('map').setView([41.388, 2.159], 12);
+L.esri.basemapLayer('Topographic').addTo(map);
+console.log(map)
+
+
+let findLoc = document.getElementById('findLoc')
+findLoc.addEventListener('click' , (e) => {
+
+    let addrName = document.getElementById('addrName')
+    let street = document.getElementById('street')
+    let pobl = document.getElementById('pobl')
+
+    if (addrName.value != null && street.value != null && pobl.value != null) {
+
+        let selected = document.getElementById('via')
+        let via = selected.options[selected.selectedIndex].text
+
+
+
+        let address = `${via} ${addrName.value} ${street.value} ${pobl.value}`;
+        
+        console.log(address)
+        setLatLng(address)
+
+    }
+
+
+})
+
+
+// BUTTON TO REGISTER USERNAME
 register.addEventListener('click' , (e) => {
     console.log("HAS HECHO CLICKKKK")
     if (!validateUsername() || !validatePassword()
@@ -31,11 +67,6 @@ register.addEventListener('click' , (e) => {
     e.preventDefault();
 
 })
-
-var map = L.map('map').setView([41.388, 2.159], 12);
-L.esri.basemapLayer('Topographic').addTo(map);
-console.log(map)
-
 
 const validateEmail = () => {
 
@@ -94,6 +125,33 @@ const validatePassword = () => {
 
 // Listener to input for validating password
 document.getElementById("password").addEventListener("blur" , validatePassword)
+
+
+// SET LATITUDE && LONGITUDE
+const setLatLng = (address) => {
+
+    L.esri.Geocoding.geocode().text(address).run((err , results , response) => {
+
+        if (!err) {
+
+            latitude = results.results[0].latlng.lat
+            longitude = results.results[0].latlng.lng;
+
+            console.log("lat ="+latitude+", lng = "+longitude);
+
+            L.marker([latitude, longitude]).addTo(map);
+
+            register.disabled = false
+
+        } else {
+
+            console.log(err)
+            alert("We've got a problem validating your address , " + err)
+        }
+
+    })
+
+}
 
 
 const setIsValid = (element ) => {
