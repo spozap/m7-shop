@@ -1,7 +1,6 @@
 let register = document.getElementById("registerBtn")
 let invalidFeedbacks = document.querySelectorAll('.invalid-feedback')
 
-console.log("AAAAA")
 register.addEventListener('click' , (e) => {
     console.log("HAS HECHO CLICKKKK")
     if (!validateUsername() || !validatePassword()
@@ -32,6 +31,11 @@ register.addEventListener('click' , (e) => {
     e.preventDefault();
 
 })
+
+var map = L.map('map').setView([41.388, 2.159], 12);
+L.esri.basemapLayer('Topographic').addTo(map);
+console.log(map)
+
 
 const validateEmail = () => {
 
