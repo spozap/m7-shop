@@ -42,6 +42,7 @@ session_start();
             <a href="main.php">PÁGINA PRINCIPAL</a>
             <a href="myProducts.php">MIS PRODUCTOS</a> 
             <a href="privateArea.php">ÁREA PRIVADA</a>
+            <a href="map.php">MAPA</a>
         </li>';
     }
 
