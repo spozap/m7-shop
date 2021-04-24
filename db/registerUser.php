@@ -2,11 +2,13 @@
 
 include_once("dbConfig.php");
 
-if(isset($_POST['username'],$_POST['password'],$_POST['email'])){
+if(isset($_POST['username'],$_POST['password'],$_POST['email'],$_POST['latitude'],$_POST['longitude'])){
         
     $user = $_POST['username'];
     $pwd = $_POST['password'];
     $email = $_POST['email'];
+    $lat = $_POST['latitude'];
+    $lng = $_POST['longitude'];
 
     $connection = getConnection();
 
@@ -16,8 +18,8 @@ if(isset($_POST['username'],$_POST['password'],$_POST['email'])){
     
     $pwd = password_hash($pwd,PASSWORD_DEFAULT);
     
-    $query = $connection->prepare("INSERT INTO `customer`(`username`,`password`,`email`) VALUES (?,?,?)");
-    $query -> bind_param("sss",$user,$pwd,$email);
+    $query = $connection->prepare("INSERT INTO `customer`(`username`,`password`,`email`,`lat`,`lng`) VALUES (?,?,?,?,?)");
+    $query -> bind_param("sssss",$user,$pwd,$email,$lat,$lng);
     $id = $connection -> insert_id;
     $query -> execute();
     
@@ -25,7 +27,7 @@ if(isset($_POST['username'],$_POST['password'],$_POST['email'])){
     
     if ($query->affected_rows === 0){
         $connection -> close();
-        echo json_encode(["message" => "CACA"]);
+        echo json_encode(["message" => "PRODUCT NOT INSERTED"]);
     }
     
     session_start();

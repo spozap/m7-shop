@@ -50,6 +50,8 @@ register.addEventListener('click' , (e) => {
     body.append("username" , document.getElementById('username').value)
     body.append("password", document.getElementById('password').value)
     body.append("email", document.getElementById('email').value)
+    body.append("latitude" , latitude.value)
+    body.append("longitude" , longitude.value)
 
     console.log(document.getElementById('username').value)
     console.log(document.getElementById('password').value)
@@ -134,12 +136,15 @@ const setLatLng = (address) => {
 
         if (!err) {
 
-            latitude = results.results[0].latlng.lat
-            longitude = results.results[0].latlng.lng;
+            let lat = results.results[0].latlng.lat
+            let long = results.results[0].latlng.lng;
 
-            console.log("lat ="+latitude+", lng = "+longitude);
+            console.log("lat ="+lat+", lng = "+long);
 
-            L.marker([latitude, longitude]).addTo(map);
+            L.marker([lat, long]).addTo(map);
+
+            latitude.value = lat
+            longitude.value = long
 
             register.disabled = false
 
