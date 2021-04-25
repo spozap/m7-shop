@@ -1,7 +1,6 @@
 <?php
 
     include_once('../common/header.php');
-
 ?>
 
 <head>
@@ -9,27 +8,27 @@
 </head>
 <body>
     <div id="container">
-    </br>
-    <form class="product-filter" method="GET" action="main.php" id="products">
-        <input type="text" name="product" placeholder="Buscar productos..."> 
-        <select name="category" class="custom-select">
+    <br />
+    <form class="product-filter" method="POST" id="products">
+        <input type="text" name="product" id="product" placeholder="Buscar productos..."> 
+        <select name="category" id="category" class="custom-select">
             <option disabled selected hidden>Seleccionar categoría</option>
             <option value="muebles">Muebles y hogar</option>
             <option value="deporte">Deporte</option>
             <option value="otros">Otros</option>
         </select>
         <label style="margin-left:10px;">Filtrar por precio: </label>
-        <input class="price-input" type="text" name="from" placeholder="Desde">     
-        <input class="price-input" type="text" name="to" placeholder="Hasta">
-        <select name="order" class="custom-select" form="products">
+        <input class="price-input" type="text" name="from" id="from" placeholder="Desde">     
+        <input class="price-input" type="text" name="to" id="to" placeholder="Hasta">
+        <select name="order" id="order" class="custom-select" form="products">
             <option disabled selected hidden>Ordenar por...</option>
             <option value="precioasc">Precio - Ascendente</option>
             <option value="precioasc">Precio - Descendente</option>
             <option value="fechaasc">Fecha - Ascendente</option>
             <option value="fechadesc">Fecha - Descendente</option>
         </select>
-        <button type="submit">BUSCAR </button>  
-   </form>
+        <button id="submit">BUSCAR </button>  
+    </form>
         <?php 
 
         
@@ -44,24 +43,7 @@
 
                 //showPaginatedProducts($actual);
             
-            } else if (!(empty($_GET['category'])) || (!empty($_GET['order'])) || (!empty($_GET['from']))
-            || (!empty($_GET['to'])) || (!empty($_GET['product']))){ // Query products matching filters
-
-                if (empty($_GET['order'])){
-                    $order = "";
-                } else {
-                    $order = $_GET['order'];
-                }
-
-                if (empty($_GET['category'])){
-                    $category = "";
-                } else {
-                    $category = $_GET['category'];
-                }
-
-                showProductsMatchingFilters($_GET['product'],$category,$_GET['from'],$_GET['to'],$order);
-
-            } else { // If there is no filters and no Id is specified , show 10 first products
+            }  else { // If there is no filters and no Id is specified , show 10 first products
 
                 //showPaginatedProducts(1);
             }
@@ -70,7 +52,11 @@
          ?>
     </div>
 
-    <style>
+    <script src="../js/showProducts.js"></script>
+
+</body>
+
+<style>
         .product-container{
             display:flex;
             flex-wrap:wrap;
@@ -99,7 +85,3 @@
             margin-left: 10px;
         }
     </style>
-
-    <script src="../js/showProducts.js"></script>
-
-</body>

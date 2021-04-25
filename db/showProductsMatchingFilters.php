@@ -2,30 +2,44 @@
 
 include_once("dbConfig.php");
 
-function showProductsMatchingFilters($name,$category,$priceFrom,$priceTo,$order){
+if (!(empty($_POST['category'])) || (!empty($_POST['order'])) || (!empty($_POST['from']))
+            || (!empty($_POST['to'])) || (!empty($_POST['product']))){
 
     $select = "SELECT * FROM products WHERE";
 
     $validArgs = array();
     $validTypes = "";
 
-    if (!empty($name)){
+    if (!empty($_POST['product'])){
+
+        $name = $_POST['product'];
+
         $select.= " name LIKE CONCAT(?,'%') and";
         array_push($validArgs,$name);
+        
     }
 
-    if(!empty($category)){
+    if(!empty($_POST['category'])){
+
+        $category = $_POST['category'];
+
         $select.=" categoria=? and";
         array_push($validArgs,$category);
     }
 
-    if(!empty($priceFrom) || !empty($priceTo)){
+    if(!empty($_POST['to']) || !empty($_POST['from'])){
+        
+        $priceTo = $_POST['to'];
+        $priceFrom = $_POST['from'];
+
         $select.= " precio BETWEEN ? and ? and";
         array_push($validArgs,$priceFrom);
         array_push($validArgs,$priceTo);
     }
 
-    if (!empty($order)){
+    if (!empty($_POST['order'])){
+
+        $order = $_POST['order'];
 
         if($order === 'precioasc'){
             $select.= " ORDER BY precio asc";
@@ -87,27 +101,27 @@ function showProductsMatchingFilters($name,$category,$priceFrom,$priceTo,$order)
 
     $query->bind_result($id,$user_id,$name,$description,$images,$category,$price,$createdAt,$visits);
 
-    while($query->fetch()){
+    $products = array();
+
+    $pre = $query -> get_result();
+
+    while($product = $pre->fetch_assoc()){
         
-        echo "<div class='card product' style='width: 18rem;'>".
-        "       <img class='card-img-top' src='".explode("\n",$images)[0]."' alt='Card image cap'>".
-        "       <div class='card-body'>".
-        "        <h5 class='card-title'>$name</h5>".
-        "         <p class='card-text'>$description</p>".
-        "         <p class='card-text'>Precio: $price</p>".
-        "         <p class='card-text'>Publicado: $createdAt</p>".            
-        "          <a href='specs.php?product_id=$id' class='btn btn-primary'>+ Info </a>". 
-        "      </div></div>";
+        array_push($products , $product);
 
     }
 
     $connection->close();
+    echo json_encode($products);
+    return;
+} 
 
-}
+    echo json_encode(["message" => "no products found"]);
+?>
 
+<?php
 // Method made to get reference of each value on parameters given to bind_param , if not 
 // call_user_func_array does not accept it.
-
 function refValues($arr){
     $refs = array();
     foreach($arr as $key => $value){

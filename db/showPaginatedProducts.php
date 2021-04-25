@@ -30,7 +30,6 @@ $pre = $query -> get_result();
 
 while($product = $pre->fetch_assoc()){
 
-
     array_push($products,$product);
 
 } 
