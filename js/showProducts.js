@@ -54,16 +54,14 @@ document.getElementById("submit").addEventListener('click' , (e) => {
     .then(data => {
 
         
-        if (data.length === 0) {
+        if (data.length !== 0) {
             data.forEach(product => {
 
                 createCard(product)
     
             })
         } else {
-
-            alert("NO HAY PRODUCTOS")
-
+            alert("NO SE HA ENCONTRADO NINGUN PRODUCTO")
         }
 
     })
