@@ -30,7 +30,7 @@ login.addEventListener('click' , (e) => {
 
         if (data.validated === true) {
 
-            location.replace("http://localhost/m7-shop/views/main.php")
+            location.replace("http://localhost/m7-shop-JsUF3/views/main.php")
 
         } else {
 

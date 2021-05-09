@@ -62,7 +62,7 @@ register.addEventListener('click' , (e) => {
     .then(data => {
 
         console.log(data)
-        location.replace("http://localhost/m7-shop/views/main.php")
+        location.replace("http://localhost/m7-shop-JsUF3/views/main.php")
 
     });
 
