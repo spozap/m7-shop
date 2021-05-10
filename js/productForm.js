@@ -40,8 +40,6 @@ submit.addEventListener('click' ,function(e) {
     }
     
     body.append("category" , category)
-
-    e.preventDefault();
     
     fetch("../db/insertProduct.php", { method: 'POST', body: body }).then(response => {
         response.json()
@@ -49,6 +47,8 @@ submit.addEventListener('click' ,function(e) {
     .then(data => {
 
         console.log(data)
+        clearFormData()
+        alert("EL PRODUCTO SE HA INSERTADO CORRECTAMENTE")
     })
 
     e.preventDefault();
@@ -144,4 +144,11 @@ const setIsInvalid = (element , feedback , message) => {
     feedback.innerHTML = message
     element.classList.add('is-invalid')
     
+}
+
+const clearFormData = () => {
+
+    let form = document.getElementsByClassName("form-register")[0]
+    form.reset()
+
 }
