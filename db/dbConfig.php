@@ -1,11 +1,11 @@
 <?php
 
 function getConnection(){
-    return new mysqli('localhost','root','','m7-shop');
+    return new mysqli('localhost','austria','Austria123!','m7-shop');
 }
 
 function getPDOConnection(){
-    return new PDO("mysql:host=localhost;dbname=m7-shop","root","");
+    return new PDO("mysql:host=localhost;dbname=m7-shop","austria","Austria123!");
 }
 
 function isLogged(){

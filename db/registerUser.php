@@ -28,6 +28,7 @@ if(isset($_POST['username'],$_POST['password'],$_POST['email'],$_POST['latitude'
     if ($query->affected_rows === 0){
         $connection -> close();
         echo json_encode(["message" => "PRODUCT NOT INSERTED"]);
+        return; 
     }
     
     session_start();

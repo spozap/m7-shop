@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS `m7-shop`;
+USE `m7-shop`;
 
 CREATE TABLE `customer` (
   `id` int(10) NOT NULL,
